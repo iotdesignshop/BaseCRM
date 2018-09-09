@@ -16,14 +16,22 @@ function model(proto, data, readonly) {
 			}
 		}
 	}
-
-    return item;
+	
+	return item;
 }
 
 model.methods = {
+	
+	getId: function() {
+		if (this.hasOwnProperty("id"))
+			return this.id;
+		if (this.__proto__.hasOwnProperty("id"))
+			return this.__proto__.id;
+		return null;
+	},
 	save: function(callback) {
-	    return this.id ?
-		    this.constructor.update(this.id, this, callback) :
+	    return this.getId() ?
+		    this.constructor.update(this.getId(), this, callback) :
 		    this.constructor.create(this, callback);
 	},
     delete: function(callback) {
